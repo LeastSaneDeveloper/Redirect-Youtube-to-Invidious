@@ -17,7 +17,7 @@
 // @grant GM.getValue
 // @grant GM.setValue
 // ==/UserScript==
-// if x (location.origin + location.pathname) ended in a /, will it still end in a /? and if x (location.origin + location.pathname) didnt end in a / will it end in a / or not?
+
 (async () => {
     'use strict';
     let defaultInstance = await GM.getValue("defaultInstance", null);
