@@ -13,6 +13,7 @@
 // @match *://youtube.com/watch*
 // @match *://youtu.be/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance/*
+// @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance/*
 // @run-at document-start
 // @grant GM.getValue
 // @grant GM.setValue
@@ -21,22 +22,26 @@
 (async () => {
     'use strict';
     let defaultInstance = await GM.getValue("defaultInstance", null);
-    let queryParams = window.location.search;
-    let encodedQueryParams = encodeURIComponent(queryParams);
-    let urlExceptForProtocol = window.location.origin + window.location.pathname;
-    if (urlExceptForProtocol.endsWith("/")) urlExceptForProtocol.slice(0, -1);
-    if (urlExceptForProtocol === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance") {
+    let rawQueryParams = window.location.search;
+    let encodedQueryParams = encodeURIComponent(rawQueryParams);
+    let queryParams = new URLSearchParams(rawQuerarams);
+    let cleanURL = window.location.origin + window.location.pathname;
+    if (cleanURL.endsWith("/")) cleanURL.slice(0, -1);
+    if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance") {
         if (!defaultInstance) {
             window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/there-is-no-default-instance");
         } else {
             await GM.setValue("defaultInstance", null);
             window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/removed-default-instance");
         }
+    } else if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance") {
+        await GM.setValue("defaultInstance", queryPaeams.get("to"));
+        window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/default-instance-set");
     } else {
         if (!defaultInstance) {
             window.location.replace(`https://leastsanedeveloper.github.io/redirect-youtube-to-invidious?queryParams={encodedQueryParams}`);
         } else {
-            window.location.replace(defaultInstance + queryParams);
+            window.location.replace(defaultInstance + rawQueryParams);
         }
     }
 })();
