@@ -27,14 +27,14 @@
     if (cleanURL.endsWith("/")) cleanURL.slice(0, -1);
     if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance") {
         if (!defaultInstance) {
-            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/there-is-no-default-instance");
+            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("There is no default instance to remove!"));
         } else {
             await GM.setValue("defaultInstance", null);
-            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/removed-default-instance");
+            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("Removed default instance successfully."));
         }
     } else if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance") {
-        await GM.setValue("defaultInstance", queryPaeams.get("to"));
-        window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/default-instance-set");
+        await GM.setValue("defaultInstance", queryParams.get("to"));
+        window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("Default instance set successfully: " + defaultInstance));
     } else {
         if (!defaultInstance) {
             window.location.replace("https://redirect.invidious.io" + everythingAfterHostname);
