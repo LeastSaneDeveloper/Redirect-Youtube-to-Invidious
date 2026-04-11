@@ -22,9 +22,7 @@
 (async () => {
     'use strict';
     let defaultInstance = await GM.getValue("defaultInstance", null);
-    let rawQueryParams = window.location.search;
-    let encodedQueryParams = encodeURIComponent(rawQueryParams);
-    let queryParams = new URLSearchParams(rawQuerarams);
+    let everythingAfterHostname = window.location.pathname + window.location.search + window.location.hash;
     let cleanURL = window.location.origin + window.location.pathname;
     if (cleanURL.endsWith("/")) cleanURL.slice(0, -1);
     if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance") {
@@ -39,9 +37,9 @@
         window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/default-instance-set");
     } else {
         if (!defaultInstance) {
-            window.location.replace(`https://leastsanedeveloper.github.io/redirect-youtube-to-invidious?queryParams={encodedQueryParams}`);
+            window.location.replace("https://redirect.invidious.io" + everythingAfterHostname);
         } else {
-            window.location.replace(defaultInstance + rawQueryParams);
+            window.location.replace(defaultInstance + everythingAfterHostname);
         }
     }
 })();
