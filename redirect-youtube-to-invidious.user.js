@@ -23,7 +23,7 @@
 (async () => {
     "use strict";
     let defaultInstance = await GM.getValue("defaultInstance", null);
-    let hostName = window.location.origin;
+    let hostName = window.location.hostname;
     let everythingAfterHostname =
         window.location.pathname +
         window.location.search +
@@ -82,7 +82,9 @@
                 });
             });
         });
-        observer.observe(tBody, { childList: true, subtree: false });
+        if (tBody) {
+            observer.observe(tBody, { childList: true, subtree: false });
+        }
     } else {
         if (!defaultInstance) {
             window.location.replace(
