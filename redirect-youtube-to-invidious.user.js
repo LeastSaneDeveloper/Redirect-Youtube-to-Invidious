@@ -66,6 +66,10 @@
             return;
         }
         await GM.setValue("defaultInstance", newInstance);
+        window.location.replace(
+            "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
+                encodeURIComponent("Default instance set successfully."),
+        );
     } else if (hostName === "redirect.invidious.io") {
         const tBody = document.getElementById("instances-tbody");
         const observer = new MutationObserver((mutations) => {
