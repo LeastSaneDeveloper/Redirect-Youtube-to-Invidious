@@ -72,27 +72,26 @@
         );
     } else if (hostName === "redirect.invidious.io") {
         const tBody = document.getElementById("instances-tbody");
+
+        const processRow = (node) => {
+            if (node.nodeType === 1 && node.nodeName.toLowerCase() === "tr") {
+                let a = node.querySelector("a");
+                if (!a) return;
+                let newHref = new URL(a.href);
+                newHref.searchParams.set("quality", "dash");
+                newHref.searchParams.set("quality_dash", "1080");
+                a.href = newHref.toString();
+            }
+        };
+
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-                mutation.addedNodes.forEach((node) => {
-                    if (
-                        node.nodeType === 1 &&
-                        node.nodeName.toLowerCase() === "tr"
-                    ) {
-                        let a = node.querySelector("a");
-                        if (!a) return;
-                        let originalHref = a.href;
-                        let newHref = new URL(originalHref);
-                        newHref.searchParams.set("quality", "dash");
-                        newHref.searchParams.set("quality_dash", "1080");
-                        a.href = newHref.toString();
-                    }
-                });
+                mutation.addedNodes.forEach(processRow);
             });
         });
-        if (tBody) {
-            observer.observe(tBody, { childList: true, subtree: false });
-        }
+
+        tBody.querySelectorAll("tr").forEach(processRow);
+        observer.observe(tBody, { childList: true, subtree: false });
     } else {
         if (!defaultInstance) {
             window.location.replace(
