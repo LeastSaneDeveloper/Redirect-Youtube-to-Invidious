@@ -80,7 +80,7 @@
                         let newHref = new URL(originalHref);
                         newHref.searchParams.set("quality", "dash");
                         newHref.searchParams.set("quality_dash", "1080");
-                        a.href = newHref;
+                        a.href = newHref.toString();
                     }
                 });
             });
