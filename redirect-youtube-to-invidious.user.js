@@ -14,30 +14,80 @@
 // @match *://youtu.be/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance/*
+// @match *//redirect.invidious.io/*
 // @run-at document-start
 // @grant GM.getValue
 // @grant GM.setValue
 // ==/UserScript==
 
 (async () => {
-    'use strict';
+    "use strict";
     let defaultInstance = await GM.getValue("defaultInstance", null);
-    let everythingAfterHostname = window.location.pathname + window.location.search + window.location.hash;
-    let cleanURL = window.location.origin + window.location.pathname;
-    if (cleanURL.endsWith("/")) cleanURL.slice(0, -1);
-    if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance") {
+    let hostName = window.location.origin;
+    let everythingAfterHostname =
+        window.location.pathname +
+        window.location.search +
+        window.location.hash;
+    let cleanURL = hostName + window.location.pathname;
+    const queryParams = new URLSearchParams(window.location.search);
+    if (cleanURL.endsWith("/")) cleanURL = cleanURL.slice(0, -1);
+    if (
+        cleanURL ===
+        "leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance"
+    ) {
         if (!defaultInstance) {
-            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("There is no default instance to remove!"));
+            window.location.replace(
+                "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
+                    encodeURIComponent(
+                        "There is no default instance to remove!",
+                    ),
+            );
         } else {
             await GM.setValue("defaultInstance", null);
-            window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("Removed default instance successfully."));
+            window.location.replace(
+                "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
+                    encodeURIComponent(
+                        "Removed default instance successfully.",
+                    ),
+            );
         }
-    } else if (cleanURL === "leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance") {
-        await GM.setValue("defaultInstance", queryParams.get("to"));
-        window.location.replace("https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" + encodeURIComponent("Default instance set successfully: " + defaultInstance));
+    } else if (
+        cleanURL ===
+        "leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance"
+    ) {
+        const newInstance = queryParams.get("to");
+        await GM.setValue("defaultInstance", newInstance);
+        window.location.replace(
+            "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
+                encodeURIComponent(
+                    "Default instance set successfully: " + newInstance,
+                ),
+        );
+    } else if (hostName === "redirect.invidious.io") {
+        const tBody = document.getElementById("instances-tbody");
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (
+                        node.nodeType === 1 &&
+                        node.nodeName.toLowerCase() === "tr"
+                    ) {
+                        let a = node.querySelector("a");
+                        let originalHref = a.href;
+                        let newHref = new URL(originalHref);
+                        newHref.searchParams.set("quality", "dash");
+                        newHref.searchParams.set("quality_dash", "1080");
+                        a.href = newHref;
+                    }
+                });
+            });
+        });
+        observer.observe(tBody, { childList: true, subtree: false });
     } else {
         if (!defaultInstance) {
-            window.location.replace("https://redirect.invidious.io" + everythingAfterHostname);
+            window.location.replace(
+                "https://redirect.invidious.io" + everythingAfterHostname,
+            );
         } else {
             window.location.replace(defaultInstance + everythingAfterHostname);
         }
