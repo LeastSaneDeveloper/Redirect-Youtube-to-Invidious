@@ -14,7 +14,7 @@
 // @match *://youtu.be/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance/*
-// @match *//redirect.invidious.io/*
+// @match *://redirect.invidious.io/*
 // @run-at document-start
 // @grant GM.getValue
 // @grant GM.setValue
