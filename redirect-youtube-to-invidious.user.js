@@ -80,6 +80,7 @@
                         node.nodeName.toLowerCase() === "tr"
                     ) {
                         let a = node.querySelector("a");
+                        if (!a) return;
                         let originalHref = a.href;
                         let newHref = new URL(originalHref);
                         newHref.searchParams.set("quality", "dash");
