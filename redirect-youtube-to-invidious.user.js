@@ -56,13 +56,14 @@
         "leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance"
     ) {
         const newInstance = queryParams.get("to");
+        if (!newInstance) {
+            window.location.replace(
+                "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
+                    encodeURIComponent("Missing 'to' parameter."),
+            );
+            return;
+        }
         await GM.setValue("defaultInstance", newInstance);
-        window.location.replace(
-            "https://leastsanedeveloper.github.io/redirect-youtube-to-invidious/status?message=" +
-                encodeURIComponent(
-                    "Default instance set successfully: " + newInstance,
-                ),
-        );
     } else if (hostName === "redirect.invidious.io") {
         const tBody = document.getElementById("instances-tbody");
         const observer = new MutationObserver((mutations) => {
