@@ -9,8 +9,8 @@
 // @downloadURL https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.js
 // @updateURL   https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.js
 // @supportURL  https://github.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/issues
-// @match *://www.youtube.com/watch*
-// @match *://youtube.com/watch*
+// @match *://www.youtube.com/*
+// @match *://youtube.com/*
 // @match *://youtu.be/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/remove-default-instance/*
 // @match *://leastsanedeveloper.github.io/redirect-youtube-to-invidious/set-default-instance/*
