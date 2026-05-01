@@ -21,6 +21,8 @@
 // ==/UserScript==
 
 (async () => {
+    // NOTE: I switched to Zed Editor so the code formatting is a bit weird now
+
     "use strict";
     let defaultInstance = await GM.getValue("defaultInstance", null);
     let hostName = window.location.hostname;
