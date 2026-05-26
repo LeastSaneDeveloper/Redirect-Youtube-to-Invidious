@@ -6,8 +6,8 @@
 // @description  Redirects Youtube URLs to a launchpad for selecting an Invidious instance.
 // @homepage    https://github.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious
 // @homepageURL https://github.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious
-// @downloadURL https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.js
-// @updateURL   https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.js
+// @downloadURL https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.user.js
+// @updateURL   https://raw.githubusercontent.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/main/redirect-youtube-to-invidious.user.js
 // @supportURL  https://github.com/LeastSaneDeveloper/Redirect-Youtube-to-Invidious/issues
 // @match *://www.youtube.com/*
 // @match *://youtube.com/*
